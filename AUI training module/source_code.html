@@ -1,0 +1,912 @@
+<html>
+	<head>
+		<link href="stylesheet.css" rel="stylesheet">
+		<title>DBB: Source Code</title>
+		<link rel="icon" type="image/jpg" href="images/favicon.jpg">
+	</head>
+	<body id="source_code_body">
+		<div id="navbar">
+			<span id="title" class="navbar-content"><a href="index.html">DBB: Dodge Bouncing Balls Game</a></span>
+			<span id="user_guide" class="navbar-content"><a href="user_guide.html">User Guide</a></span>
+			<span id="developer_tutorial" class="navbar-content"><a href="developer_tutorial.html">Developer Tutorial</a></span>
+			<span id="source_code" class="navbar-content"><a href="source_code.html">Source Code</a></span>
+		</div>
+		<div id="user_guide_navigation">
+			<h3>Jump to:</h3>
+			<div class="user-guide-navigation-item"><a href="#html_section">HTML</a></div>
+			<div class="user-guide-navigation-item"><a href="#css_section">CSS</a></div>
+			<div class="user-guide-navigation-item"><a href="#javascript_section">JavaScript</a></div>
+		</div>
+		<div class="outer-container">
+			<h1>Game Source Code</h1>
+			<p>Note: the formatting of the source code may be slightly modified to enable it to fit better on the page.</p>
+			<br />
+			<h3 id="html_section">HTML</h3>
+			<div class="source-code">
+				<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"&gt;&lt;/script&gt;
+		&lt;script src="DBB.js"&gt;&lt;/script&gt;
+		&lt;link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"&gt;
+		&lt;link href="stylesheet.css" rel="stylesheet"&gt;
+		&lt;title&gt;DBB: Dodge Bouncing Balls&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;div id="navbar"&gt;
+			&lt;span id="title" class="navbar-content"&gt;
+				&lt;a href="DBB.html"&gt;DBB: Dodge Bouncing Balls Game&lt;/a&gt;
+			&lt;/span&gt;
+			&lt;span id="user_guide" class="navbar-content"&gt;
+				&lt;a href="user_guide.html"&gt;User Guide&lt;/a&gt;
+			&lt;/span&gt;
+			&lt;span id="developer_tutorial" class="navbar-content"&gt;
+				&lt;a href="developer_tutorial.html"&gt;Developer Tutorial&lt;/a&gt;
+			&lt;/span&gt;
+			&lt;span id="source_code" class="navbar-content"&gt;
+				&lt;a href="source_code.html"&gt;Source Code&lt;/a&gt;
+			&lt;/span&gt;
+		&lt;/div&gt;
+
+		&lt;div class="pbar"&gt;&lt;/div&gt;
+		&lt;!-- AUI progress bar base html --&gt;
+		&lt;div class="health-bar-content"&gt;&lt;/div&gt;
+
+		&lt;div id="outer_containter"&gt;
+			&lt;div id="canvas_container"&gt;
+				&lt;canvas id="background"&gt;&lt;/canvas&gt;
+			&lt;/div&gt;
+
+			&lt;!-- YUI slider module base html --&gt;
+			&lt;div id="slider_container" class="yui3-skin-sam"&gt;
+				&lt;p&gt;
+					&lt;span id="difficulty" class="level-info"&gt;Difficulty: &lt;/span&gt;
+
+					&lt;input id="horiz_value" name="sliderInput" value="1" readonly&gt;
+
+					&lt;span id="level" class="level-info"&gt;Level: 1&lt;/span&gt;
+
+					&lt;span id="ball_counter" class="level-info"&gt;Balls: 3&lt;/span&gt;
+
+					&lt;span id="level_timer" class="level-info"&gt;Time: 0&lt;/span&gt;
+
+					&lt;span id="user_score" class="level-info"&gt;Score: 0&lt;/span&gt;
+
+					&lt;span class="horiz_slider"&gt;&lt;/span&gt;
+				&lt;/p&gt;
+
+				&lt;span class="yui3-widget yui3-sliderbase yui-slider"&gt;
+					&lt;span class="yui3-slider-content yui3-slider-x"&gt;
+						&lt;span class="yui3-slider-rail"&gt;
+							&lt;span class="yui3-slider-rail-cap-left"&gt;&lt;/span&gt;
+
+							&lt;span class="yui3-slider-rail-cap-right"&gt;&lt;/span&gt;
+
+							&lt;span class="yui3-slider-thumb"&gt;
+								&lt;img class="yui3-slider-thumb-shadow"&gt;
+
+								&lt;img class="yui3-slider-thumb-image"&gt;
+							&lt;/span&gt;
+						&lt;/span&gt;
+
+						&lt;span id="difficulty_caption"&gt;Difficulty Level Control&lt;/span&gt;
+					&lt;/span&gt;
+				&lt;/span&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+
+		&lt;div id="button_container"&gt;
+			&lt;button id="start" class="button"&gt;Start&lt;/button&gt;
+
+			&lt;button id="pause" class="button"&gt;Pause&lt;/button&gt;
+
+			&lt;div id="new_level"&gt;&lt;span&gt;Next Level !&lt;/span&gt;&lt;/div&gt;
+
+			&lt;button id="instructions" class="button"&gt;Toggle Hints&lt;/button&gt;
+
+			&lt;button id="new_ball" class="button"&gt;Add New Ball&lt;/button&gt;
+
+			&lt;button id="start_over" class="button"&gt;New Game&lt;/button&gt;
+
+			&lt;span id="hit_counter" class="counter"&gt;Damage: &lt;/span&gt;
+		&lt;/div&gt;
+
+		&lt;!-- AUI modal base html --&gt;
+		&lt;div id="modal"&gt;&lt;/div&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+				</pre>
+			</div>
+			<br />
+			<br />
+			<h3 id="css_section">CSS</h3>
+			<div class="source-code">
+				<pre>
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*--------- end Meyer CSS reset ----------*/
+
+body {
+	background-color: #D4DADC;
+	background-image: url(images/ball_blur.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Calibri',sans-serif;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: 800;
+	line-height: 50px;
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: 800;
+	line-height: 26px;
+}
+
+#navbar {
+	background-color: #F71207;
+	color: #FFF;
+	font-size: 18px;
+	height: 35px;
+	line-height: 35px;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
+
+#navbar a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+#navbar a:hover {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.navbar-content {
+	margin: 0 45px;
+}
+
+#title {
+	color: #FFF;
+	display: inline-block;
+}
+
+#user_guide {
+	display: inline-block;
+}
+
+#developer_tutorial {
+	display: inline-block;
+}
+
+.counter {
+	font-size: 20px;
+}
+
+#hit_counter {
+	display: none;
+}
+
+.button {
+	background-color: #004B68;
+	border-radius: 5px;
+	border: 2px solid #004B68;
+	color: #EEF3F6;
+	display: inline-block;
+	font-size: 18px;
+	height: 60px;
+	margin: 5px;
+	width: 140px;
+}
+
+#new_ball {
+	visibility: hidden;
+}
+
+#pause {
+	visibility: hidden;
+}
+
+#start_over {
+	visibility: hidden;
+}
+
+.button:hover {
+	background-color: #EEF3F6;
+	color: #004B68;
+}
+
+#button_container {
+	margin: 10px auto 0;
+	width: 600px;
+}
+
+#title_container {
+	color: #F71207;
+	display: block;
+	font-family: 'Audiowide', cursive;
+	font-size: 200px;
+	margin: 200px 0 0 5%;
+	opacity: 0.2;
+	position: fixed;
+	z-index: -1;
+}
+
+#subtitle {
+	display: block;
+	font-size: 40px;
+}
+
+#outer_containter {
+	background-color: #004B68;
+	border: 4px solid #EEF3F6;
+	height: 570px;
+	margin: 0 auto;
+	padding: 25px;
+	width: 600px;
+	z-index: -10;
+}
+
+#canvas_container {
+	background-color: #FFF;
+	background-image: url(images/starting_position.jpg);
+	height: 500px;
+	width: 600px;
+}
+
+#background {
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+#user_div {
+	background-color: transparent;;
+	height: 500px;
+	width: 600px;
+}
+
+#user_ball {
+	background-color: red;
+	height: 20px;
+	width: 20px;
+}
+
+.progress {
+	margin: 30px auto;
+}
+
+.progress .bar {
+	background-color: #F71207;
+	background-image: none;
+}
+
+.progress .bar p {
+	font-size: 14px;
+	text-shadow: none;
+}
+
+#horiz_value {
+	width: 18px;
+}
+
+#difficulty {
+	color: #FFF;
+	display: inline-block;
+	left: 510px;
+	margin: 5px 0 0 0;
+	width: 65px;
+}
+
+#level {
+	margin-left: 70px;
+}
+
+.level-info {
+	color: #FFF;
+	display: inline-block;
+	font-size: 16px;
+	margin: 5px 0 0 10px;
+	width: 90px;
+}
+
+#difficulty_caption {
+	color: #FFF;
+	margin-left: 230px;
+}
+
+#new_level {
+	background-color: #F71207;
+	border-radius: 5px;
+	color: #EEF3F6;
+	display: inline-block;
+	height: 60px;
+	margin: 5px;
+	opacity: 0.0;
+	vertical-align: top;
+	width: 275px;
+}
+
+#new_level span {
+	display: inline-block;
+	font-size: 20px;
+	height: 100%;
+	line-height: 52px;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
+
+.user-guide-image {
+	margin-bottom: 20px;
+	max-width: 100%;
+}
+
+.bold-text {
+	font-weight: 800;
+}
+
+.outer-container {
+	background-color: #FFF;
+	border-left: 2px solid #F71207;
+	border-right: 2px solid #F71207;
+	font-size: 16px;
+	line-height: 24px;
+	margin: 0 20%;
+	padding: 20px 60px;
+}
+
+#arrow_keys_image {
+	width: 300px;
+}
+
+#user_guide_navigation {
+	background-color: #FFF;
+	border: 2px solid #F71207;
+	max-width: 300px;
+	padding: 20px;
+	position: fixed;
+}
+
+.user-guide-navigation-item {
+	font-size: 18px;
+	height: 100%;
+	line-height: 24px;
+	margin: 5px;
+	width: 100%;
+}
+
+.user-guide-navigation-item a {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.user-guide-navigation-item a:hover {
+	color: #F71207;
+}
+
+.child-navigation-item {
+	font-size: 18px;
+	line-height: 24px;
+	margin-left: 20px;
+}
+
+.child-navigation-item a {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.child-navigation-item a:hover {
+	color: #F71207;
+}
+
+#develop_tutorial_body {
+	background-image: none;
+}
+
+#user_guide_body {
+	background-image: none;
+}
+
+#source_code_body {
+	background-image: none;
+}
+
+.source-code {
+	background-color: #EEF3F6;
+	border: 2px solid #D4DADC;
+	font-family: 'Courier New';
+	font-size: 15px;
+	margin: 10px auto;
+	max-height: 800px;
+	overflow: auto;
+	width: 100%;
+	word-wrap: normal;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Audiowide);
+			</pre>
+		</div>
+			<br />
+			<br />
+			<h3 id="javascript_section">JavaScript</h3>
+			<div class="source-code">
+				<pre>
+YUI().use(
+	'node',
+	'aui-progressbar',
+	'slider',
+	'aui-modal',
+	'transition',
+	'aui-popover',
+	function(Y) {
+		var ballsArray;
+		var damage;
+		var drawInterval = 0;
+		var health = 100;
+		var healthBar;
+		var height = 500; // hold canvas height
+		var hits = 0;
+		var innerUpdateCounter = 0;
+		var numberOfBalls = 3;
+		var sliderValue = 1; // initial value of YUI slider
+		var timerInterval = 0;
+		var userBall; // variable to hold user ball object
+		var width = 600; // hold canvas width
+		var showingPopovers = false;
+
+		// assign Unicode keyboard values variables
+		var LEFT = '37';
+		var RIGHT = '39';
+		var UP = '38';
+		var DOWN = '40';
+
+		var userSpeed = 20; // how many pixels the user's ball can cover on a key press
+		var level = 1; // holds which level the user is on
+		var score = 0;
+		var timer = 0;
+
+		var healthBarPopover;
+		var startPopover;
+		var canvasPopover;
+		var difficultySliderPopover;
+		var hudPopover;
+		var userBallPopover;
+
+		var hBar = Y.one('.pbar');
+		var canvasContainer = Y.one('#canvas_container');
+		var difficultySlider = Y.one('.yui3-slider-rail');
+
+		// grab button nodes and assign to variables
+		var start = Y.one('#start');
+		var pause = Y.one('#pause');
+		var startOver = Y.one('#start_over');
+		var newBall = Y.one('#new_ball');
+		var instructions = Y.one('#instructions');
+
+		var newLevel = Y.one('#new_level');
+
+		var ballCounter = Y.one('#ball_counter');
+		var levelTimer = Y.one('#level_timer');
+		var userScore = Y.one('#user_score');
+		var userLevel = Y.one('#level');
+
+		// assign variables to hold nodes for AUI progress bar and YUI slider content
+		var healthBarContent = Y.one('.health-bar-content');
+		var xInput = Y.one('#horiz_value');
+		var xSlider;
+
+		// create the health bar
+		healthBar = new Y.ProgressBar(
+			{
+				contentBox: '.pbar',
+				label: 'Damage',
+				value: hits,
+				width: width + 50,
+			}
+		).render();
+
+		// if the slider is changed, change the number of balls displayed
+		function updateSlider(e) {
+			this.set('value', e.newVal);
+			sliderValue = xSlider.getValue();
+			numberOfBalls = sliderValue * 3;
+			ballCounter.setContent('Balls: ' + numberOfBalls);
+		}
+
+		// create a new slider instance
+		xSlider = new Y.Slider({
+			length:'600px',
+			min: 1,
+			max: 5,
+			value: 1,
+		});
+
+		// set the initial slider value, set what to do after a value change, render slider
+		xInput.setData({slider:xSlider});
+		xSlider.after('valueChange', updateSlider, xInput);
+		xSlider.render("#slider_container");
+
+		document.onkeydown = userMove; //call user movement function on key press
+
+		// generate a random integer between specified values
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+		// if the user presses left, right, up, or down move the user ball appropriately
+		function userMove(e) {
+			e = e || window.event;
+			if(e.keyCode == LEFT && userBall.x - userBall.radius * 2 >= 0) {
+				userBall.x -= userSpeed;
+			}
+			else if(e.keyCode == RIGHT && userBall.x + userBall.radius * 2 <= canvas.width) {
+				userBall.x += userSpeed;
+			}
+			else if(e.keyCode == UP && userBall.y - userBall.radius * 2 >= 0) {
+				userBall.y -= userSpeed;
+			}
+			else if(e.keyCode == DOWN && userBall.y + userBall.radius * 2 <= canvas.height) {
+				userBall.y += userSpeed;
+			}
+		}
+
+		//ball constructor
+		function Ball() {
+			this.radius = 10; // set ball radius
+			this.x = getRandomInt(this.radius * 3, width - this.radius * 3); // initial x position
+			this.y = getRandomInt(this.radius * 3, height / 2); // initial y position
+			this.dirX = getRandomInt(-4,4); // assign ball a change in x position
+			this.dirY = getRandomInt(-4,4); // assign ball a change in y position
+			this.col = colorsArray[getRandomInt(0,colorsArray.length-1)];
+		}
+
+		// store available ball colors in an array
+		var colorsArray = ['#1E9D74','#146A4F','#00174C','#B02F02','#FC4302','#8BCC7E','#CDE9C7','#E49F1A'];
+
+		// check each ball against every other ball to see if they have collided
+		function checkCollision() {
+			var ball1;
+			var ball2;
+			var ballx
+			var tempHolder;
+
+			// check to see if any ball has hit the users ball, if so update hit count and damage
+			for(var i = 1; i < ballsArray.length; i++) {
+				ballx = ballsArray[i];
+				if((((userBall.x - userBall.radius <= ballx.x - ballx.radius) &&
+					(userBall.x + userBall.radius >= ballx.x - ballx.radius)) ||
+					((ballx.x - ballx.radius <= userBall.x - userBall.radius) &&
+					(ballx.x + ballx.radius >= userBall.x - userBall.radius)))
+					&&
+					(((userBall.y - userBall.radius <= ballx.y - ballx.radius) &&
+					(userBall.y + userBall.radius >= ballx.y - ballx.radius)) ||
+					((ballx.y - ballx.radius <= userBall.y - userBall.radius) &&
+					(ballx.y + ballx.radius >= userBall.y - userBall.radius)))) {
+					// var element = document.getElementById('hit_counter');
+					hits++;
+					// element.innerHTML = 'Damage: ' + hits;
+					updateDamage();
+				}
+			}
+
+			// check each ball to see if it has hit any other ball, if so change direction of both balls
+			for(var i=0; i<ballsArray.length; i++) {
+				ball1 = ballsArray[i];
+
+				for(var j=0; j<ballsArray.length; j++) {
+					ball2 = ballsArray[j];
+
+					if((((ball1.x - ball1.radius <= ball2.x - ball2.radius) && (ball1.x + ball1.radius >= ball2.x - ball2.radius)) && ((ball1.y - ball1.radius <= ball2.y - ball2.radius) && (ball1.y + ball1.radius >= ball2.y - ball2.radius)))) {
+						tempHolder = ball1.dirX;
+						ball1.dirX = ball1.dirY;
+						ball1.dirY = tempHolder;
+						tempHolder = ball2.dirX;
+						ball2.dirX = ball2.dirY;
+						ball2.dirY = tempHolder;
+					}
+				}
+			}
+		}
+
+		// draw canvas
+		function draw() {
+			var canvas = document.getElementById('background');
+			var ctx = canvas.getContext('2d'); // define context for canvas
+			canvas.width = width; // assign canvas width
+			canvas.height = height; // assign canvas height
+
+			// clear canvas
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			checkCollision();
+
+			for (var i = 0; i < ballsArray.length; i++) {
+				var ball = ballsArray[i];
+
+				// fill and draw balls
+				ctx.fillStyle = ball.col;
+				ctx.beginPath();
+
+				// check to see if ball hits canvas edge, if so change direction
+				if (ball.x + ball.radius >= canvas.width || ball.x - ball.radius <= 0) {
+					ball.dirX *= -1;
+				}
+				if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0) {
+					ball.dirY *= -1;
+				}
+
+				ball.x += ball.dirX;
+				ball.y += ball.dirY;
+
+				ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, false);
+				ctx.stroke();
+				ctx.fill();
+			}
+		}
+
+		function fadeNewLevelPopUp() {
+			newLevel.transition({
+				duration: 1,
+				opacity: 0.0,
+				easing: 'ease-out'
+			});
+		}
+
+		// update time, level, and user score
+		function updateLevelInfo() {
+			innerUpdateCounter += 1;
+			timer += 1;
+			levelTimer.setContent('Time: ' + timer);
+			score = (1 * numberOfBalls) + score;
+			userScore.setContent('Score: ' + score);
+
+			if (timer % 10 == 0) {
+				level+= 1;
+				userLevel.setContent('Level: ' + level);
+				ballsArray.push(new Ball());
+				numberOfBalls += 1;
+				ballCounter.setContent('Balls: ' + numberOfBalls);
+				newLevel.setStyle('opacity','1.0');
+			}
+
+			else if (innerUpdateCounter == 11) {
+				innerUpdateCounter = 1;
+				fadeNewLevelPopUp();
+			}
+		}
+
+		// start a level time and call updateLevelInfo() every second
+		function startLevelTimer() {
+			timerInterval = setInterval(function(){updateLevelInfo()}, 1000);
+		}
+
+		function showInstructionsPopovers() {
+			if (showingPopovers == false) {
+				userBallPopover = new Y.Popover(
+					{
+						align: {
+						node: canvasContainer,
+						points:[Y.WidgetPositionAlign.BL, Y.WidgetPositionAlign.BL]
+					},
+						bodyContent: 'This is your ball. Use up, down, left, and right arrow keys to move.',
+						position: 'left'
+					}
+				).render();
+
+				hudPopover = new Y.Popover(
+					{
+						align: {
+						node: userScore,
+						points:[Y.WidgetPositionAlign.LC, Y.WidgetPositionAlign.RC]
+					},
+						bodyContent: 'The current level you are on, number of balls on-screen, elapsed time, and your score are displayed here. The level will change every 10 seconds.',
+						position: 'right'
+					}
+				).render();
+
+				difficultySliderPopover = new Y.Popover(
+					{
+						align: {
+						node: difficultySlider,
+						points:[Y.WidgetPositionAlign.RC, Y.WidgetPositionAlign.BL]
+					},
+						bodyContent: 'You can control the difficulty level (numbers of balls on screen) with this slider. Left is easy, right is...well...death.',
+						position: 'left'
+					}
+				).render();
+
+				canvasPopover = new Y.Popover(
+					{
+						align: {
+						node: canvasContainer,
+						points:[Y.WidgetPositionAlign.RC, Y.WidgetPositionAlign.LC]
+					},
+						bodyContent: 'This is where the action takes place. You will control the large red ball at the bottom of the screen. The other balls will start at the top half of the screen; avoid them!',
+						position: 'left'
+					}
+				).render();
+
+				healthBarPopover = new Y.Popover(
+					{
+						align: {
+						node: hBar,
+						points:[Y.WidgetPositionAlign.RC, Y.WidgetPositionAlign.LC]
+					},
+						bodyContent: 'This bar shows your current damage. Try to avoid filling it with red...',
+						position: 'left'
+					}
+				).render();
+
+				startPopover = new Y.Popover(
+					{
+						align: {
+						node: start,
+						points:[Y.WidgetPositionAlign.RC, Y.WidgetPositionAlign.LC]
+					},
+						bodyContent: 'Press to start a new game or un-pause a paused game.',
+						position: 'left'
+					}
+				).render();
+
+				showingPopovers = true;
+			}
+
+			else if (showingPopovers == true) {
+				startPopover.destroy();
+				healthBarPopover.destroy();
+				canvasPopover.destroy();
+				difficultySliderPopover.destroy();
+				hudPopover.destroy();
+				userBallPopover.destroy();
+				showingPopovers = false;
+			}
+		}
+
+		// start when user clicks on start button, hide other buttons
+		start.on('click', function() {
+			startLevelTimer();
+			loadBallArray(); // load balls into the ball array
+			drawInterval = setInterval(draw, 16); // redraw canvas every 16 milliseconds
+			start.setStyle('visibility','hidden');
+			pause.setStyle('visibility','visible');
+			newBall.setStyle('visibility','visible');
+			startOver.setStyle('visibility','hidden');
+			ballCounter.setContent('Balls: ' + numberOfBalls);
+		});
+
+		// stop drawing on canvas and hide/show appropriate buttons when pause button is clicked
+		pause.on('click', function() {
+			start.setStyle('visibility','visible');
+			pause.setStyle('visibility','hidden');
+			newBall.setStyle('visibility','hidden');
+			clearInterval(drawInterval);
+			clearInterval(timerInterval);
+		});
+
+		// add a new ball object to the ball array when the button is clicked
+		newBall.on('click', function() {
+			ballsArray.push(new Ball());
+			numberOfBalls += 1;
+			ballCounter.setContent('Balls: ' + numberOfBalls);
+		});
+
+		instructions.on('click', function() {
+			showInstructionsPopovers();
+		})
+
+		// reload the page when the start over button is clicked
+		startOver.on('click', function() {
+			location.reload();
+		});
+
+		// launch game over (modal) message, hide appropriate buttons, and stop re-drawing canvas
+		function gameEnded() {
+			var modal = new Y.Modal(
+				{
+					bodyContent: 'Game over! Can you beat your score? Try again!',
+					centered: true,
+					draggable: false,
+					headerContent: 'Game Over!',
+					render: '#modal',
+					resizable: false
+				}
+			).render();
+
+			start.setStyle('visibility','hidden');
+			pause.setStyle('visibility','hidden');
+			newBall.setStyle('visibility','hidden');
+			startOver.setStyle('visibility','visible');
+			clearInterval(drawInterval);
+			clearInterval(timerInterval);
+		}
+
+		// update the health bar with number of hits and end game if they exceed upper limit
+		function updateDamage() {
+			healthBar.set('value',hits);
+
+			if (hits >= 100) {
+				gameEnded();
+			}
+		}
+
+		function loadBallArray() {
+			ballsArray = new Array(numberOfBalls);
+
+			// load a new ball object into each address of the array
+			for (var i = 0; i < ballsArray.length; i++) {
+				ballsArray[i] = new Ball();
+			}
+
+			// create user ball with specific attributes and place in ball array
+			userBall = new Ball();
+			userBall.col = '#F71207';
+			userBall.dirX = 0;
+			userBall.dirY = 0;
+			userBall.x = 300;
+			userBall.y = 460;
+			userBall.radius = 20;
+
+			// place the user ball into the first position of the array to keep track of it more easily
+			ballsArray.unshift(userBall);
+		}
+
+	}
+); // end YUI
+			</pre>
+		</div>
+		</div>
+	</body>
+</html>

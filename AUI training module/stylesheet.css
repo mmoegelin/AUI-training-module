@@ -1,0 +1,354 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*--------- end Meyer CSS reset ----------*/
+
+body {
+	background-color: #D4DADC;
+	background-image: url(images/ball_blur.png);
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: 'Calibri',sans-serif;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: 800;
+	line-height: 50px;
+}
+
+h3 {
+	font-size: 20px;
+	font-weight: 800;
+	line-height: 26px;
+}
+
+#navbar {
+	background-color: #F71207;
+	color: #FFF;
+	font-size: 18px;
+	height: 35px;
+	line-height: 35px;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
+
+#navbar a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+#navbar a:hover {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.navbar-content {
+	margin: 0 45px;
+}
+
+#title {
+	color: #FFF;
+	display: inline-block;
+}
+
+#user_guide {
+	display: inline-block;
+}
+
+#developer_tutorial {
+	display: inline-block;
+}
+
+.counter {
+	font-size: 20px;
+}
+
+#hit_counter {
+	display: none;
+}
+
+.button {
+	background-color: #004B68;
+	border-radius: 5px;
+	border: 2px solid #004B68;
+	color: #EEF3F6;
+	display: inline-block;
+	font-size: 18px;
+	height: 60px;
+	margin: 5px;
+	width: 140px;
+}
+
+#new_ball {
+	visibility: hidden;
+}
+
+#pause {
+	visibility: hidden;
+}
+
+#start_over {
+	visibility: hidden;
+}
+
+.button:hover {
+	background-color: #EEF3F6;
+	color: #004B68;
+}
+
+#button_container {
+	margin: 10px auto 0;
+	width: 600px;
+}
+
+#title_container {
+	color: #F71207;
+	display: block;
+	font-family: 'Audiowide', cursive;
+	font-size: 200px;
+	margin: 200px 0 0 5%;
+	opacity: 0.2;
+	position: fixed;
+	z-index: -1;
+}
+
+#subtitle {
+	display: block;
+	font-size: 40px;
+}
+
+#outer_containter {
+	background-color: #004B68;
+	border: 4px solid #EEF3F6;
+	height: 570px;
+	margin: 0 auto;
+	padding: 25px;
+	width: 600px;
+	z-index: -10;
+}
+
+#canvas_container {
+	background-color: #FFF;
+	background-image: url(images/starting_position.jpg);
+	height: 500px;
+	width: 600px;
+}
+
+#background {
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+#user_div {
+	background-color: transparent;;
+	height: 500px;
+	width: 600px;
+}
+
+#user_ball {
+	background-color: red;
+	height: 20px;
+	width: 20px;
+}
+
+.progress {
+	margin: 30px auto;
+}
+
+.progress .bar {
+	background-color: #F71207;
+	background-image: none;
+}
+
+.progress .bar p {
+	font-size: 14px;
+	text-shadow: none;
+}
+
+#horiz_value {
+	width: 18px;
+}
+
+#difficulty {
+	color: #FFF;
+	display: inline-block;
+	left: 510px;
+	margin: 5px 0 0 0;
+	width: 65px;
+}
+
+#level {
+	margin-left: 70px;
+}
+
+.level-info {
+	color: #FFF;
+	display: inline-block;
+	font-size: 16px;
+	margin: 5px 0 0 10px;
+	width: 90px;
+}
+
+#difficulty_caption {
+	color: #FFF;
+	margin-left: 230px;
+}
+
+#new_level {
+	background-color: #F71207;
+	border-radius: 5px;
+	color: #EEF3F6;
+	display: inline-block;
+	height: 60px;
+	margin: 5px;
+	opacity: 0.0;
+	vertical-align: top;
+	width: 275px;
+}
+
+#new_level span {
+	display: inline-block;
+	font-size: 20px;
+	height: 100%;
+	line-height: 52px;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
+
+.user-guide-image {
+	margin-bottom: 20px;
+	max-width: 100%;
+}
+
+.bold-text {
+	font-weight: 800;
+}
+
+.outer-container {
+	background-color: #FFF;
+	border-left: 2px solid #F71207;
+	border-right: 2px solid #F71207;
+	font-size: 16px;
+	line-height: 24px;
+	margin: 0 20%;
+	padding: 20px 60px;
+}
+
+#arrow_keys_image {
+	width: 300px;
+}
+
+#user_guide_navigation {
+	background-color: #FFF;
+	border: 2px solid #F71207;
+	max-width: 300px;
+	padding: 20px;
+	position: fixed;
+}
+
+.user-guide-navigation-item {
+	font-size: 18px;
+	height: 100%;
+	line-height: 24px;
+	margin: 5px;
+	width: 100%;
+}
+
+.user-guide-navigation-item a {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.user-guide-navigation-item a:hover {
+	color: #F71207;
+}
+
+.child-navigation-item {
+	font-size: 18px;
+	line-height: 24px;
+	margin-left: 20px;
+}
+
+.child-navigation-item a {
+	color: #004B68;
+	text-decoration: none;
+}
+
+.child-navigation-item a:hover {
+	color: #F71207;
+}
+
+#develop_tutorial_body {
+	background-image: none;
+}
+
+#user_guide_body {
+	background-image: none;
+}
+
+#source_code_body {
+	background-image: none;
+}
+
+.source-code {
+	background-color: #EEF3F6;
+	border: 2px solid #D4DADC;
+	font-family: 'Courier New';
+	font-size: 15px;
+	margin: 10px auto;
+	max-height: 800px;
+	overflow: auto;
+	width: 100%;
+	word-wrap: normal;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Audiowide);

@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<link href="stylesheet.css" rel="stylesheet">
+		<title>DBB: User Guide</title>
+		<link rel="icon" type="image/jpg" href="images/favicon.jpg">
+	</head>
+	<body id="user_guide_body">
+		<div id="navbar">
+			<span id="title" class="navbar-content"><a href="index.html">DBB: Dodge Bouncing Balls Game</a></span>
+			<span id="user_guide" class="navbar-content"><a href="user_guide.html">User Guide</a></span>
+			<span id="developer_tutorial" class="navbar-content"><a href="developer_tutorial.html">Developer Tutorial</a></span>
+			<span id="source_code" class="navbar-content"><a href="source_code.html">Source Code</a></span>
+		</div>
+
+		<div id="user_guide_navigation">
+			<h3>Jump to:</h3>
+			<div class="user-guide-navigation-item"><a href="#getting_started">Getting Started</a></div>
+			<div class="user-guide-navigation-item"><a href="#onscreen_items">On-screen buttons and display items</a></div>
+			<div class="user-guide-navigation-item"><a href="#hud_items">Game status indicators</a></div>
+			<div class="user-guide-navigation-item"><a href="#playing_the_game">Playing the game</a></div>
+		</div>
+
+		<div class="outer-container">
+			<h1>User Guide</h1>
+			<h3 id="getting_started">Getting Started</h3>
+			<p>
+				When you initially load the Dodge Bouncing Balls web page you should see something similar to the picture below.
+			</p>
+			<img class="user-guide-image" src="images/Start_screenshot.jpg" alt="picture of start screen" />
+			<p>
+				The picture located below shows all of the buttons that will be displayed during the course of the game.
+			</p>
+			<img class="user-guide-image" src="images/Display_all_screenshot.jpg" alt="picture of game buttons" />
+			<p id="onscreen_items">
+				The purpose and use of each button/area will be explained below.
+			</p>
+			<p>
+				<span class="bold-text">Damage Meter: </span>this shows how much damage the user's ball has incurred. The meter starts empty (white) and fills with orange as damage occurs. Once the meter is completely filled the game ends.
+			</p>
+			<p>
+				<span class="bold-text">Ball zone: </span>the game itself will take place within this white rectangular area. Balls which the user most avoid will be generated on the top half of this area. The balls will bounce against the outer edges of this area.
+			</p>
+			<p>
+				<span class="bold-text">User Ball: </span>this is the ball that the user controls during the game. You can move the ball by pressing the up, down, left, or right arrow keys. Movement is restricted to the white 'Ball zone' area.
+			</p>
+			<p>
+				<span class="bold-text">Start: </span>click this button to begin a new game or to unpause a currently paused game. Once a game has started this button will disappear unless the 'Pause' button or 'New Game' button is pressed.
+			</p>
+			<p>
+				<span class="bold-text">Pause: </span>click this button to pause an in-progress game. This button is initially hidden but will become visible once a game has started.
+			</p>
+			<p>
+				<span class="bold-text">Next Level: </span>this is a popup which will be displayed each time the user reaches a new level. New levels can be reached every ten seconds. By default, this pop-up is hidden until the next level is reached; it is then briefly displayed.
+			</p>
+			<p>
+				<span class="bold-text">Toggle Hints: </span>click this button to display hint popups which give additional information about the game. The pop-ups are hidden by default but can be toggled between hidden and visible by clicking this button.
+			</p>
+			<p>
+				<span class="bold-text">Add New Ball: </span>click this button while a game is in progress to add a new ball to the ball zone. This button is hidden by default and will only be visible while a game is in progress (and un-paused).
+			</p>
+			<p>
+				<span class="bold-text">New Game: </span>this button is hidden by default. When a game ends this button will appear; click the button to reset the game.
+			</p>
+			<br />
+			<p>
+				The picture below shows the game's status indicators in greater detail.
+			</p>
+			<img class="user-guide-image" src="images/HUD_screenshot.jpg" alt="game status indicators" />
+			<p id="hud_items">
+				<span class="bold-text">Difficulty: </span>this displays the current difficulty setting. The minimum difficulty is 1 and the maximum is 5. The difficulty setting itself if controlled by the 'Difficulty Control Level' slider.
+			</p>
+			<p>
+				<span class="bold-text">Level: </span>this displays the level the user is currently on. A new level is reached every ten seconds.
+			</p>
+			<p>
+				<span class="bold-text">Balls: </span>this displays the current number of balls (excluding the user's ball) that are currently on screen.
+			</p>
+			<p>
+				<span class="bold-text">Time: </span>this displays how much time has elapsed (in seconds) since the game started.
+			</p>
+			<p>
+				<span class="bold-text">Score: </span>this displays the user's current score. The score is a product of time and the number of balls on screen; the higher the difficulty and the longer the time elapsed the more quickly the score accrues.
+			</p>
+			<p>
+				<span class="bold-text">Difficulty Control Level: </span>this slider controls the difficulty setting. The minimum difficulty level is 1 (far left value) and the maximum value is 5 (far right value). You can change the difficulty at any time during the game, however the new difficulty setting will only take effect once the game has been un-paused or a new game is started (after the difficulty setting is changed).
+			</p>
+			<br />
+			<h3 id="playing_the_game">Playing the Game</h3>
+			<p>
+				<span class="bold-text">Goal: </span>the goal of the game is to acquire a high score. The longer you can last and the higher the difficulty level the higher your score will be.
+			</p>
+			<p>
+				<span class="bold-text">Controls: </span>you control the large orange ball with the arrow keys on a keyboard. Pressing an arrow will make the user ball move in the corresponding direction (for example, pressing the up arrow will make the user ball move up on the screen).
+			</p>
+			<img class="user-guide-image" id="arrow_keys_image" src="images/arrow_keys.jpg" alt="keyboard arrow keys" />
+			<p>
+				<span class="bold-text">Game Over: </span>when your damage meter is full (due to your ball colliding with the other on-screen balls) the game ends. A game over message will be displayed and the user will have the option of starting a new game by pressing the 'New Game' button.
+			</p>
+		</div>
+	</body>
+</html>

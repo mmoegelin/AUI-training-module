@@ -1,0 +1,303 @@
+Developer Tutorial
+Introduction
+
+This developer tutorial will cover the steps required to get the Dodge Bouncing Balls (DBB) game up and running. This tutorial will assume a basic level of HTML, CSS, and JavaScript, and as such will not cover every line of code. The source code can be referenced if there are some details that are not covered by this tutorial. The main focus will be on the underlying YUI/AUI and JavaScript code which provides the game's core functionality.
+
+Note: some of the source code shown on this page may have been formatted or edited to better explain or isolate specific code. Also, additional comments have been added throughout portions of displayed code to better explain the code functionality.
+
+Getting to Know AUI
+
+What is YUI/AUI?
+
+Before getting into the details of which YUI (Yahoo User Interface) and AUI (AlloyUI) modules will be used and how to add them into the game's code, it's a good idea to get a feel for YUI and AUI. YUI and AUI are JavaScript libraries, much like jQuery, which provide a consistent API that makes programming easier and slightly less verbose. There is a slight learning curve for these libraries, but once you know the basic structure and how they interact with other elements (both code and DOM elements) they can make your programming tasks easier. YUI and AUI share the same format, in fact, AUI is built on top of the YUI library (along with Bootstrap). As such, the modules from both libraries can be used interchangeably. From here forward, when YUI or AUI are mentioned, you can assume that both libraries are being referred to; I will only use AUI hereafter to refer to both libraries.
+
+AUI Structure
+
+To be able to use AUI, you must first add the AUI seed file for the module you will be using. The seed files enables AUI to dynamically load dependencies as needed. It should be noted that some AUI modules will need different seed files than other modules; pay close attention to the seed file that the API documentation notes. The following is an example seed file (which should be placed in your HTML):
+<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+
+The seed file adds a single AUI object variable to the page. To be able to access this object you must create a new instance of the YUI object:
+
+<script>
+// Create a new YUI sandbox and load the "node" module.
+YUI().use('node', function (Y) {
+	// YUI will call this function and pass in the YUI instance (Y) once all
+	// modules have finished loading and are ready to use.
+
+	// We can now use Y.Node to get references to DOM elements using CSS selectors.
+	var demo = Y.one('#demo');
+
+	// And we can listen for DOM events.
+	demo.on('click', function (e) {
+		demo.set('text', 'You clicked me!');
+	});
+});
+</script>
+
+The YUI() code creates the instance of the YUI object without loading an modules. The .use() method called immediately afterward is used to load the modules you wish to use. As many modules as needed can be added here (in a comma separated list). If there are multiple AUI instances that use the same modules, each instance will have its own copy of the module, so they will not interfere with each other. For DBB the following modules will be loaded:
+
+YUI().use(
+	'node',
+	'aui-progressbar',
+	'slider',
+	'aui-modal',
+	'transition',
+	'aui-popover',
+	function(Y) {
+});
+
+After the necessary modules are added, a callback function will be executed once all the modules are loaded. This function gets the YUI instance passed in as an argument. Inside the function write the code you wish to be executed once the modules have loaded.
+function(Y) { // code to be executed }
+
+The pattern that AUI uses is called a 'sandbox' pattern. You can have multiple AUI sandboxes on the same page and they won't interfere with each other or otherwise pollute global any JavaScript being used. Since all of DBB's game code is in a single file and multiple sandboxes are not necessary, a single sandbox will be used.
+
+The basic structure for each AUI sandbox will be similar to the following code (though it can technically be changed, this is the typical pattern):
+
+YUI().use(
+	'node', // module list
+	function (Y) {
+		// functions to be executed once all of the modules have loaded
+}); // end of AUI sandbox
+
+More information on the AUI global object can be found here.
+
+Adding AUI Modules
+
+It was noted above which AUI modules DBB uses. This section will note how these modules are put into the AUI sandbox and how they interact with other code.
+
+Node
+
+The node module is used to create, collect, or otherwise manipulate DOM nodes (i.e. HTML elements). Each node represents a DOM node, and each node list represents a collection of DOM nodes. The node module can also be used to conveniently manipulate CSS classes or styles, which is the main usage of the node module in DBB. To manipulate a particular DOM node, you must first declare a variable within the AUI sandbox and assign it a DOM node or node list.
+var start = Y.one('#start');
+
+In the example above the variable 'start' is being assigned an AUI node, which is itself being grabbed from a DOM element with an ID of 'start' (which happens to be an HTML button). Y.one accepts an existing DOM element or CSS selector. If a node list is necessary (rather than a single node), you can use Y.all.
+
+Most of the node module usage in DBB has to do with changing the CSS style when a particular function is called. In the example below, when the aforementioned 'start' button is clicked, the node module is used to change the CSS style or content of other nodes (which have also been assigned to variables). The commented lines are those which relate to the node module.
+
+//clicking on the start node calls this function
+start.on('click', function() {
+	startLevelTimer();
+	loadBallArray();
+	drawInterval = setInterval(draw, 20);
+	start.setStyle('visibility','hidden'); //change node CSS visibility style to hidden
+	pause.setStyle('visibility','visible'); //change node CSS visibility style to visible
+	newBall.setStyle('visibility','visible'); //change node CSS style
+	startOver.setStyle('visibility','hidden'); //change node CSS style
+	ballCounter.setContent('Balls: ' + numberOfBalls); //change content of node
+});
+
+
+Progress Bar
+
+The AUI Progress Bar requires the following two files (the seed file and a CSS stylesheet file) be added to the page HTML:
+
+<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+
+It should be noted that the AUI seed file includes YUI3, so additional YUI seed files do not have to be included for YUI specific modules. The module also requires that a div be created in the page HTML and given an ID. This div will be the wrapper for the progress bar; the module will insert the progress bar content into this div itself. The div for DBB is shown below:
+<div class="pbar"></div>
+
+To create a progress bar a new progress bar instance must be made within the AUI sandbox. The progress bar has several attributes you can specify including whether there should be a label on the progress bar, and is so what it should say, what the initial value of the progress bar should be, the width of the progress bar, and so on. In DBB the progress bar (which displays the damage the user's ball takes) is created and rendered before the game starts (once the AUI modules are loaded).
+
+healthBar = new Y.ProgressBar(
+	{
+		contentBox: '.pbar',
+		label: 'Damage',
+		value: hits,
+		width: width + 50,
+	}
+).render();
+
+The progress bar's initial value is set to the variable 'hits' which is itself declared with a value of 0.
+var hits = 0;
+
+As the user's ball collides with other balls the value of 'hits' is increased. Anytime 'hits' increases the function updateDamage() is called to update the value of the progress bar. If the number of hits exceeds 100 the game ends.
+
+function updateDamage() {
+	healthBar.set('value',hits); // update the progress bar's displayed value
+
+	if (hits >= 100) {
+		gameEnded();
+	}
+}
+
+
+Slider
+
+The Slider module requires slightly more HTML that the progress bar module. It also requires a link to a CSS stylesheet, but since this file has been added to the HTML page already (for the progress bar module) it does not need to be added again. In addition to the slider itself, an input box is created which will display a value which corresponds to the slider's value (e.g. if the slider's value is 2 the input box will display the number '2').
+
+<div id="slider_container" class="yui3-skin-sam">
+	<p>
+		<span id="difficulty" class="level-info">Difficulty: </span>
+		<input id="horiz_value" name="sliderInput" value="1" readonly>
+		<span class="horiz_slider"></span>
+	</p>
+
+	<span class="yui3-widget yui3-sliderbase yui-slider">
+		<span class="yui3-slider-content yui3-slider-x">
+			<span class="yui3-slider-rail">
+				<span class="yui3-slider-rail-cap-left"></span>
+				<span class="yui3-slider-rail-cap-right"></span>
+				<span class="yui3-slider-thumb">
+					<img class="yui3-slider-thumb-shadow">
+					<img class="yui3-slider-thumb-image">
+				</span>
+			</span>
+		</span>
+	</span>
+</div>
+
+Like the progress bar module, this a new instance of this module is created once all of the modules have loaded in the AUI sandbox. The slider is given a length of 600px (the same length as the canvas on which the balls are drawn), a minimum value of 1 (the lowest the slider will be allowed to go), a maximum value of 5 (the highest the slider will be allowed to go), and an initial value of one.
+
+xSlider = new Y.Slider({
+	length:'600px',
+	min: 1,
+	max: 5,
+	value: 1,
+});
+
+Since the slider module in DBB includes an input box that displays a value corresponding to the slider's value, both the slider's value and the input box value need to be updated when a change in value occurs. In DBB these updates take place in a single function, updateSlider(), which is called when the slider value has been changed by the user (by actually sliding the slider control). The difficulty level (number of balls on-screen) and difficulty input box value are changed when the slider value is changed.
+
+function updateSlider(e) {
+	this.set('value', e.newVal);
+	sliderValue = xSlider.getValue();
+	numberOfBalls = sliderValue * 3;
+	ballCounter.setContent('Balls: ' + numberOfBalls);
+}
+
+The difficulty input box is initially set to the value of the slider. When the slider value has changed the update function is called. The slider is rendered on the page (within the div with an ID of 'slider_container') as soon as the all of the AUI modules load.
+
+xInput.setData({slider:xSlider}); // set initial difficulty input box value to slider value
+xSlider.after('valueChange', updateSlider, xInput); // call updateSlider() when the slider value changes
+xSlider.render("#slider_container"); // render the slider
+
+
+Modal
+
+The AUI modal module provides a re-sizable, drag and drop window with tool bar functionality and customizable content. The module requires the same seed and CSS files that were noted above (those that were used for the progress bar) as well as a div which will wrap the modal content. The div for DBB is shown below.
+<div id="modal"></div>
+
+In DBB the modal module is wrapped within a function which is called when the user's ball has reached the damage limit. When the function is called a new instance of the module is created and immediately rendered (the style of the buttons displayed on-screen is also changed via nodes and the game timers are cleared).
+
+function gameEnded() {
+	var modal = new Y.Modal(
+		{
+			bodyContent: 'Game over! Can you beat your score? Try again!', // set body text
+			centered: true, // set whether the modal is displayed in the center of the page
+			draggable: false, // set whether the modal can be dragged from its initial position
+			headerContent: 'Game Over!', // set header text
+			render: '#modal', // render modal in the specified div
+			resizable: false // set whether the modal can be resized
+		}
+	).render();
+
+	start.setStyle('visibility','hidden');
+	pause.setStyle('visibility','hidden');
+	newBall.setStyle('visibility','hidden');
+	startOver.setStyle('visibility','visible');
+	clearInterval(drawInterval);
+	clearInterval(timerInterval);
+}
+
+The modal module can be customized to show or hide (or be destroyed) on a function call. Due to the fact the module is only called at the end of the game and will not be viewed again, it is not necessary to specify within DBB whether the module is hidden or destroyed upon being closed.
+
+Transition
+
+The transition module is used to animate one or more CSS properties of nodes within specified time intervals and easing methods. DBB uses the transition module to transition the opacity of the div with the ID of 'new_level'. The module requires that the node module also be used (in order to grab a node or node list; e.g. var newLevel = Y.one('#new_level');). Once a node has been assigned to a variable, the transition module can be used. In DBB the transition module is wrapped within a function that is called when a new level is reached by the player (every ten seconds); the 'new_level' div has its opacity changed to full (1.0) when the new level is reached (via the function updateLevelInfo()), then fadeNewLevelPopUp() is called to transition the div back to an opacity of zero (0.0).
+
+function fadeNewLevelPopUp() {
+	newLevel.transition({
+		duration: 1, // one second duration
+		opacity: 0.0, // change the opacity to 0
+		easing: 'ease-out' // start the transition quickly but end slowly
+	});
+}
+
+Other attributes such as height, width, position, and visibility (showing and hiding) can be modified by the transition module.
+
+AUI Popover
+
+The popover module provides a positional pop-up box which can be toggled on and off. Like the previously mentioned modules, this module requires the same seed file and CSS stylesheet file that the progress bar module uses be added to the page HTML (if they have previously been added to the page, as is the case here, they do not need to be added again).
+
+<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+
+The popover module also requires than there be an HTML element to which it can be aligned (the element must have a class name or ID so that it can be accessed via nodes). In the case of DBB each popover is aligned to a different node. The popovers themselves can be aligned to a node from the top, bottom, left, or right. How the popover aligns to the node is determined by a pair of values which the WidgetPositionAlign class references. The position for the values are detailed below.
+
+    TL: specifies the top-left corner for alignment.
+    TR: specifies the top-right corner for alignment.
+    BL: specifies the bottom-left corner for alignment.
+    BR: specifies the bottom-right corner for alignment.
+    TC: specifies the top, center point for alignment.
+    RC: specifies the right, center point for alignment.
+    BC: specifies the bottom, center point for alignment.
+    LC: specifies the left, center point for alignment.
+    CC: specifies the center of widget/node for alignment.
+
+The alignment pairs are used in conjunction with WidgetPositionAlign to provide a value for the popover position. The first value given will dictate which part of the popover is aligned with the node (e.g. if the first value is TC the top center portion of the popover will be aligned with the node). The second value dictates which part of the node the popover is aligned with (e.g. if the second value is BR the popover will be aligned to the node's bottom-right corner). To further explain, points:[Y.WidgetPositionAlign.TC, Y.WidgetPositionAlign.BC] will align the top, center point of the popover with the bottom corner of its respective node. The user ball popover for DBB is shown below (as with other modules, this module is placed in the AUI sandbox and will run when all of the modules are done loading).
+
+userBallPopover = new Y.Popover(
+	{
+		align: {
+		node: canvasContainer, // node to align the popover to
+		points:[Y.WidgetPositionAlign.BL, Y.WidgetPositionAlign.BL]
+	},
+		bodyContent: 'This is your ball. Use up, down, left, and right arrow keys to move.',
+		position: 'left' // controls the direction the popover arrow points
+	}
+).render();
+
+The 'node' attribute specifies which node the popover should be aligned to. The 'bodyContent' attribute specifies what the popover will display (which can be a string or variable), the 'position' attribute specifies where in relation to its node it is being displayed so that the popover arrow points the right direction (e.g. position: 'left' basically means that the popover is being display on the left of the node, so point the popover arrow to the right. It should be noted that this attribute does not affect the popover's position in any way and the 'position' attribute does not have to correspond with how the popover is actually positioned. In short, if you want the popover arrow to point down give the 'position' attribute a value of 'top', if you want it to point to the right give the 'position' attribute a value of 'left' and so on.)
+
+It is possible to toggle the display of popovers by adding a function which changes their display style when an event such as a button click occurs. Although the popovers are created and destroyed each time the 'Toggle Hints' button is clicked in DBB (to save some coding space, with little performance overhead), an example which toggles a display is added to the previous example.
+
+var instructions = Y.one('#instructions');
+
+userBallPopover = new Y.Popover(
+	{
+		align: {
+		node: canvasContainer, // node to align the popover to
+		points:[Y.WidgetPositionAlign.BL, Y.WidgetPositionAlign.BL]
+	},
+		bodyContent: 'This is your ball. Use up, down, left, and right arrow keys to move.',
+		position: 'left' // controls the direction the popover arrow points
+	}
+).render();
+
+instructions.on(
+	'click',
+	function() {
+		userBallPopover.set('visible', !userBallPopover.get('visible'));
+});
+
+
+HTML5 Canvas
+
+HTML5 provides a canvas element which can draw graphics (with the aid of JavaScript) on the fly. Unlike other graphics players (such as Flash) the canvas element is embedded directly into a web page, meaning it can directly interact with other parts of the DOM. The canvas element is also supported natively by every major browser, rather than requiring a plug-in. This means that canvas elements will have a (largely) predictable look and performance across browsers.
+
+Markup for the canvas element is similar to other HTML elements (such as divs). This is the canvas tag for DBB: <canvas id="background"></canvas>
+
+The canvas element is drawn with the use of JavaScript. To be able to draw the canvas the first step is assign the canvas to a variable and define the context for the canvas. This step for DDB is shown below.
+
+var canvas = document.getElementById('background'); // grab canvas element
+var ctx = canvas.getContext('2d'); // define context for canvas
+canvas.width = width; // assign canvas width
+canvas.height = height; // assign canvas height
+
+After the context is defined, the objects must actually be drawn on the canvas. The following code cycles through an the array which holds the balls (via a for loop) on draws the balls on the canvas.
+
+for (var i = 0; i < ballsArray.length; i++) {
+	var ball = ballsArray[i];
+
+	// fill and draw balls
+	ctx.fillStyle = ball.col; // fill balls with colors when drawn
+	ctx.beginPath();
+
+	ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, false); // draw circle
+	ctx.stroke();
+	ctx.fill();
+}
+
+Clearing the canvas once it has been drawn is very straightforward: ctx.clearRect(0, 0, canvas.width, canvas.height);. This clears the canvas from the top left corner (0,0) to the canvas width and height. You could optionally on clear a specified portion of the canvas by changing the coordinates accordingly.
+
+The canvas cannot actually animate objects that are drawn on it. Rather, to achieve a look of fluid animation the canvas is drawn, then erased, then the canvas is drawn again with the object in its new position. In order to continually run through this cycle DDB calls the draw() function on a timer with a very short interval (16 milliseconds; very close to the optimum animation speed of 60 frames per second) drawInterval = setInterval(draw, 16);.

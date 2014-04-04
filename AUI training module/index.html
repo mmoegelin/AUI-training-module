@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<script src="DBB.js"></script>
+		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet">
+		<link href="stylesheet.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+		<title>DBB: Dodge Bouncing Balls</title>
+		<link rel="icon" type="image/jpg" href="images/favicon.jpg">
+	</head>
+	<body>
+		<div id="navbar">
+			<span id="title" class="navbar-content"><a href="index.html">DDB: Dodge Bouncing Balls Game</a></span>
+			<span id="user_guide" class="navbar-content"><a href="user_guide.html">User Guide</a></span>
+			<span id="developer_tutorial" class="navbar-content"><a href="developer_tutorial.html">Developer Tutorial</a></span>
+			<span id="source_code" class="navbar-content"><a href="source_code.html">Source Code</a></span>
+		</div>
+
+		<div class="pbar"></div>
+		<!-- AUI progress bar base html -->
+		<!-- <div class="health-bar-content"></div> -->
+
+		<div id="title_container"><span>DBB</span><span id="subtitle">Dodge Bouncing Balls</span></div>
+
+		<div id="outer_containter">
+			<div id="canvas_container">
+				<canvas id="background"></canvas>
+			</div>
+
+			<!-- YUI slider module base html -->
+			<div id="slider_container" class="yui3-skin-sam">
+				<p>
+					<span id="difficulty" class="level-info">Difficulty: </span>
+
+					<input id="horiz_value" name="sliderInput" value="1" readonly>
+
+					<span id="level" class="level-info">Level: 1</span>
+
+					<span id="ball_counter" class="level-info">Balls: 3</span>
+
+					<span id="level_timer" class="level-info">Time: 0</span>
+
+					<span id="user_score" class="level-info">Score: 0</span>
+
+					<span class="horiz_slider"></span>
+				</p>
+
+				<span class="yui3-widget yui3-sliderbase yui-slider">
+					<span class="yui3-slider-content yui3-slider-x">
+						<span class="yui3-slider-rail">
+							<span class="yui3-slider-rail-cap-left"></span>
+
+							<span class="yui3-slider-rail-cap-right"></span>
+
+							<span class="yui3-slider-thumb">
+								<img class="yui3-slider-thumb-shadow">
+
+								<img class="yui3-slider-thumb-image">
+							</span>
+						</span>
+
+						<span id="difficulty_caption">Difficulty Level Control</span>
+					</span>
+				</span>
+			</div>
+		</div>
+
+		<div id="button_container">
+			<button id="start" class="button">Start</button>
+
+			<button id="pause" class="button">Pause</button>
+
+			<div id="new_level"><span>Next Level !</span></div>
+
+			<button id="instructions" class="button">Toggle Hints</button>
+
+			<button id="new_ball" class="button">Add New Ball</button>
+
+			<button id="start_over" class="button">New Game</button>
+
+			<!-- <span id="hit_counter" class="counter">Damage: </span> -->
+		</div>
+
+		<!-- AUI modal base html -->
+		<div id="modal"></div>
+	</body>
+</html>
